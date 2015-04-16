@@ -75,9 +75,7 @@
 
 					var troops = null;
 
-					function _emitEvent(/**Event*/evt, /*Mixed*/item) {
-						var name = 'on' + evt.type.charAt(0).toUpperCase() + evt.type.substr(1);
-
+					function _emitEvent(/**Event*/evt, /*Mixed*/item, /*type*/ name) {
 						switch (evt.type) {
 						case 'leave':
 							troops = (source && source.items())[evt.oldIndex];
@@ -143,34 +141,34 @@
 						onStart: function (/**Event*/evt) {
 							troops = null;
 							nextSibling = evt.item.nextSibling;
-							_emitEvent(evt);
+							_emitEvent(evt, null, 'onStart');
 							scope.$apply();
 						},
 						onEnd: function (/**Event*/evt) {
 							//troops = null;
-							_emitEvent(evt, removed);
+							_emitEvent(evt, removed, 'onEnd');
 							scope.$apply();
 						},
 						onAdd: function (/**Event*/evt) {
 							_sync(evt);
-							_emitEvent(evt, removed);
+							_emitEvent(evt, removed, 'onAdd');
 							scope.$apply();
 						},
 						onUpdate: function (/**Event*/evt) {
 							_sync(evt);
-							_emitEvent(evt);
+							_emitEvent(evt, null, 'onUpdate');
 						},
 						onRemove: function (/**Event*/evt) {
-							_emitEvent(evt, removed);
+							_emitEvent(evt, removed, 'onRemove');
 						},
 						onSort: function (/**Event*/evt) {
-							_emitEvent(evt);
+							_emitEvent(evt, null, 'onSort');
 						},
 						onLeave: function (/**Event*/evt) {
-							_emitEvent(evt);
+							_emitEvent(evt, null, 'onLeave');
 						},
 						onOver: function (/**Event*/evt) {
-							_emitEvent(evt);
+							_emitEvent(evt, null, 'onOver');
 						}
 					}));
 
