@@ -73,15 +73,28 @@
 					;
 
 
+					var troops = null;
+
 					function _emitEvent(/**Event*/evt, /*Mixed*/item) {
 						var name = 'on' + evt.type.charAt(0).toUpperCase() + evt.type.substr(1);
+
+						switch (evt.type) {
+						case 'leave':
+							troops = (source && source.items())[evt.oldIndex];
+
+							break;
+						case 'over':
+							troops = null;
+							break;
+						}
 
 						/* jshint expr:true */
 						options[name] && options[name]({
 							model: item || source && source.item(evt.item),
 							models: source && source.items(),
 							oldIndex: evt.oldIndex,
-							newIndex: evt.newIndex
+							newIndex: evt.newIndex,
+							troops: troops
 						});
 					}
 
@@ -128,11 +141,13 @@
 						return opts;
 					}, {
 						onStart: function (/**Event*/evt) {
+							troops = null;
 							nextSibling = evt.item.nextSibling;
 							_emitEvent(evt);
 							scope.$apply();
 						},
 						onEnd: function (/**Event*/evt) {
+							//troops = null;
 							_emitEvent(evt, removed);
 							scope.$apply();
 						},
@@ -150,6 +165,12 @@
 						},
 						onSort: function (/**Event*/evt) {
 							_emitEvent(evt);
+						},
+						onLeave: function (/**Event*/evt) {
+							_emitEvent(evt);
+						},
+						onOver: function (/**Event*/evt) {
+							_emitEvent(evt);
 						}
 					}));
 
@@ -162,7 +183,7 @@
 					if (ngSortable && !/{|}/.test(ngSortable)) { // todo: ugly
 						angular.forEach([
 							'sort', 'disabled', 'draggable', 'handle', 'animation',
-							'onStart', 'onEnd', 'onAdd', 'onUpdate', 'onRemove', 'onSort'
+							'onStart', 'onEnd', 'onAdd', 'onUpdate', 'onRemove', 'onSort', 'onLeave', 'onOver'
 						], function (name) {
 							scope.$watch(ngSortable + '.' + name, function (value) {
 								if (value !== void 0) {

@@ -238,6 +238,7 @@
 
 		_on(el, 'dragover', this);
 		_on(el, 'dragenter', this);
+		_on(el, 'dragleave', this);
 
 		touchDragOverListeners.push(this._onDragOver);
 
@@ -566,6 +567,7 @@
 						rootEl.appendChild(dragEl);
 					}
 
+					_dispatchEvent(this, rootEl, 'over', target, rootEl, oldIndex, newIndex);
 					return;
 				}
 
@@ -624,6 +626,8 @@
 					this._animate(dragRect, dragEl);
 					this._animate(targetRect, target);
 				}
+
+				_dispatchEvent(this, rootEl, 'over', target, rootEl, oldIndex, newIndex);
 			}
 		},
 
@@ -746,6 +750,19 @@
 		},
 
 
+		_onDragLeave: function (evt/**Event*/) {
+			if ((activeGroup === this.options.group) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
+				var el = this.el
+					, target = _closest(evt.target, this.options.draggable, el)
+					;
+
+				//_dispatchEvent(dragEl, 'dragleavetarget', target);
+
+				_dispatchEvent(this, rootEl, 'leave', target, rootEl, oldIndex, newIndex);
+			}
+		},
+
+
 		handleEvent: function (/**Event*/evt) {
 			var type = evt.type;
 
@@ -753,6 +770,11 @@
 				if (dragEl) {
 					this._onDragOver(evt);
 					_globalDragOver(evt);
+				}
+			}
+			else if (type === 'dragleave') {
+				if (dragEl) {
+					this._onDragLeave(evt);
 				}
 			}
 			else if (type === 'drop' || type === 'dragend') {
