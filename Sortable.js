@@ -293,7 +293,7 @@
 				});
 
 				if (filter) {
-					evt.preventDefault();
+					// evt.preventDefault(); // ADM-960
 					return; // cancel dnd
 				}
 			}
