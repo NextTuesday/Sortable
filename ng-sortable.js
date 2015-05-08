@@ -26,7 +26,7 @@
 
 	angular.module('ng-sortable', [])
 		.constant('version', '0.3.7')
-		.directive('ngSortable', ['$parse', function ($parse) {
+		.directive('ngSortable', ['$parse', '$timeout', function ($parse, $timeout) {
 			var removed,
 				nextSibling;
 
@@ -73,13 +73,17 @@
 					;
 
 
-					var troops = null;
+					var troops = null,
+						troopTimeout = null;
 
 					function _emitEvent(/**Event*/evt, /*Mixed*/item, /*type*/ name) {
+						$timeout.cancel(troopTimeout);
+
 						switch (evt.type) {
 						case 'leave':
-							troops = (source && source.items())[evt.oldIndex];
-
+							troopTimeout = $timeout(function () {
+								troops = (source && source.items())[evt.oldIndex];
+							}, 50);
 							break;
 						case 'over':
 							troops = null;
