@@ -753,10 +753,22 @@
 
 
 		_onDragLeave: function (evt/**Event*/) {
-			if ((activeGroup === this.options.group) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
+			if (activeGroup &&
+				this.options.group &&
+				activeGroup.name &&
+				this.options.group.name &&
+				activeGroup.name === this.options.group.name
+			) {
 				var el = this.el
 					, target = _closest(evt.target, this.options.draggable, el)
 					;
+
+				_dispatchEvent(this, rootEl, 'leave', target, rootEl, oldIndex, newIndex);
+				return;
+			}
+
+
+			if ((activeGroup === this.options.group) && (evt.rootEl === void 0 || evt.rootEl === this.el)) {
 
 				//_dispatchEvent(dragEl, 'dragleavetarget', target);
 
