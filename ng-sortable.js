@@ -83,7 +83,7 @@
 						case 'leave':
 							troopTimeout = $timeout(function () {
 								troops = (source && source.items())[evt.oldIndex];
-							}, 50);
+							}, 50, false);
 							break;
 						case 'over':
 							troops = null;
