@@ -3,3 +3,9 @@ mock.png
 .*.sw*
 .build*
 jquery.fn.*
+.idea/.name
+.idea/misc.xml
+.idea/modules.xml
+.idea/Sortable.iml
+.idea/vcs.xml
+.idea/workspace.xml
