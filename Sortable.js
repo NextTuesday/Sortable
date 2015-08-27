@@ -376,7 +376,10 @@
 		_dragStarted: function () {
 			if (rootEl && dragEl) {
 				// Apply effect
-				_toggleClass(dragEl, this.options.ghostClass, true);
+				var that = this;
+				setTimeout(function () {
+					_toggleClass(dragEl, that.options.ghostClass, true);
+				});
 
 				Sortable.active = this;
 
