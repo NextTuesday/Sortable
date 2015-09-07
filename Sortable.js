@@ -379,7 +379,7 @@
 				var that = this;
 				setTimeout(function () {
 					_toggleClass(dragEl, that.options.ghostClass, true);
-				});
+				}, 10);
 
 				Sortable.active = this;
 
