@@ -3,6 +3,7 @@ mock.png
 .*.sw*
 .build*
 jquery.fn.*
+meteor
 .idea/.name
 .idea/misc.xml
 .idea/modules.xml

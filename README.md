@@ -55,6 +55,7 @@ You can use any element for the list and its elements, not just `ul`/`li`. Here 
 var sortable = new Sortable(el, {
 	group: "name",  // or { name: "...", pull: [true, false, clone], put: [true, false, array] }
 	sort: true,  // sorting inside list
+	delay: 0, // time in milliseconds to define when the sorting should start
 	disabled: false, // Disables the sortable if set to true.
 	store: null,  // @see Store
 	animation: 150,  // ms, animation speed moving items when sorting, `0` — without animation
@@ -109,6 +110,16 @@ var sortable = new Sortable(el, {
 	// Attempt to drag a filtered element
 	onFilter: function (/**Event*/evt) {
 		var itemEl = evt.item;  // HTMLElement receiving the `mousedown|tapstart` event.
+	},
+	
+	// Event when you move an item in the list or between lists
+	onMove: function (/**Event*/evt) {
+		// Example: http://jsbin.com/tuyafe/1/edit?js,output
+		evt.dragged; // dragged HTMLElement
+		evt.draggedRect; // TextRectangle {left, top, right и bottom}
+		evt.related; // HTMLElement on which have guided
+		evt.relatedRect; // TextRectangle
+		// retrun false; — for cancel
 	}
 });
 ```
@@ -130,9 +141,18 @@ You can also define whether lists can give away, give and keep a copy (`clone`),
 
 
 #### `sort` option
-Sorting inside list
+Sorting inside list.
 
 Demo: http://jsbin.com/xizeh/2/edit?html,js,output
+
+
+---
+
+
+#### `delay` option
+Time in milliseconds to define when the sorting should start.
+
+Demo: http://jsbin.com/xizeh/4/edit?html,js,output
 
 
 ---
@@ -195,7 +215,7 @@ Sortable.create(el, {
 Sortable.create(list, {
 	filter: ".js-remove, .js-edit",
 	onFilter: function (evt) {
-		var item = el.item,
+		var item = evt.item,
 			ctrl = evt.target;
 
 		if (Sortable.utils.is(ctrl, ".js-remove")) {  // Click on remove button
@@ -563,11 +583,11 @@ Link to the active instance.
 
 ```html
 <!-- CDNJS :: Sortable (https://cdnjs.com/) -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.2.0/Sortable.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Sortable/1.2.1/Sortable.min.js"></script>
 
 
 <!-- jsDelivr :: Sortable (http://www.jsdelivr.com/) -->
-<script src="//cdn.jsdelivr.net/sortable/1.2.0/Sortable.min.js"></script>
+<script src="//cdn.jsdelivr.net/sortable/1.2.1/Sortable.min.js"></script>
 
 
 <!-- jsDelivr :: Sortable :: Latest (http://www.jsdelivr.com/) -->
@@ -603,6 +623,7 @@ Now you can use `jquery.fn.sortable.js`:<br/>
   $("#list").sortable("{method-name}", "foo", "bar"); // call an instance method with parameters
 ```
 
+And `grunt jquery:mySortableFunc` → `jquery.fn.mySortableFunc.js`
 
 ---
 
