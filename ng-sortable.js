@@ -80,7 +80,7 @@
 						switch (evt.type) {
 						case 'leave':
 							troopTimeout = $timeout(function () {
-								troops = (source && source.items())[evt.oldIndex];
+								troops = (source)[evt.oldIndex];
 							}, 50, false);
 							break;
 						case 'over':

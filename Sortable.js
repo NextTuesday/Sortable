@@ -689,6 +689,8 @@
 						this._animate(dragRect, dragEl);
 						this._animate(targetRect, target);
 					}
+				} else if (evt.target === el) {
+					el.appendChild(dragEl);
 				}
 
 				_dispatchEvent(this, rootEl, 'over', target, rootEl, oldIndex, newIndex);
