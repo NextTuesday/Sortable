@@ -118,17 +118,23 @@
 							oldIndex = prevItems.indexOf(prevSource.item(evt.item));
 							removed = prevItems[oldIndex];
 
+							// var item = evt.item;
+
 							if (evt.clone) {
 								evt.from.removeChild(evt.clone);
 								removed = angular.copy(removed);
+								// item = evt.clone;
 							}
 							else {
 								prevItems.splice(oldIndex, 1);
 							}
 
 							items.splice(newIndex, 0, removed);
-
-							evt.from.insertBefore(evt.item, nextSibling); // revert element
+							// if (!nextSibling) {
+								evt.from.appendChild(evt.item);
+							// 	return;
+							// }
+							// evt.from.insertBefore(evt.item, nextSibling); // revert element
 						}
 						else {
 							items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
